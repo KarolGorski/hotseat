@@ -9,6 +9,7 @@ public class HotseatApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(HotseatApplication.class, args);
 		//moj testowy komentarz git
+		//moj lepszy testowy komentarz git
 	}
 
 }
