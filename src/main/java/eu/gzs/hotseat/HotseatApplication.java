@@ -23,7 +23,7 @@ public class HotseatApplication {
 
 		//Tworzenie Person - tu bez bean'ów narazie, testowo
 		Person person = new Person();
-		person.setName("Janusz"); person.setCountry("Poland");
+		person.setName("Karol"); person.setCountry("Poland");
 
 		//zapis obiektu do bazy z automatycznym mapowaniem do tabeli
 		session.save(person);
