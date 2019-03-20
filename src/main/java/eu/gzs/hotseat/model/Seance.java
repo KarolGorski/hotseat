@@ -1,14 +1,48 @@
 package eu.gzs.hotseat.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table
+@Table(name="Seance")
 public class Seance {
     @Id
     @Column(name="id")
     @GeneratedValue(strategy =GenerationType.IDENTITY)
     private int id;
 
+    private List<Seat> seats;
 
+    private Movie movie;
+
+    public Seance(int id, Movie movie, int seats_quantity) {
+        this.id = id;
+        this.movie = movie;
+        seats=new ArrayList<>(seats_quantity);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public List<Seat> getSeats() {
+        return seats;
+    }
+
+    public void setSeats(List<Seat> seats) {
+        this.seats = seats;
+    }
+
+    public Movie getMovie() {
+        return movie;
+    }
+
+    public void setMovie(Movie movie) {
+        this.movie = movie;
+    }
 }
