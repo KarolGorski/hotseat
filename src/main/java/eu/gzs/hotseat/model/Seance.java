@@ -12,14 +12,20 @@ public class Seance {
     @GeneratedValue(strategy =GenerationType.IDENTITY)
     private int id;
 
+    @OneToMany
+    @JoinColumn(name = "seance_id")
     private List<Seat> seats;
 
+    @OneToOne
     private Movie movie;
 
-    public Seance(int id, Movie movie, int seats_quantity) {
-        this.id = id;
+    public Seance(Movie movie, int seats_quantity) {
         this.movie = movie;
         seats=new ArrayList<>(seats_quantity);
+        for (int i=0; i<seats_quantity; i++){
+            seats.add(new Seat());
+            System.out.println("Seat no. "+i);
+        }
     }
 
     public int getId() {

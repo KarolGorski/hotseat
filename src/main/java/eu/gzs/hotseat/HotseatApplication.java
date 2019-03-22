@@ -1,10 +1,16 @@
 package eu.gzs.hotseat;
 
+import eu.gzs.hotseat.model.Client;
+import eu.gzs.hotseat.model.Movie;
+import eu.gzs.hotseat.model.Seance;
+import eu.gzs.hotseat.model.Seat;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.util.List;
 
@@ -12,29 +18,32 @@ import java.util.List;
 public class HotseatApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(HotseatApplication.class, args);
-		//moj testowy komentarz git
-		//moj lepszy testowy komentarz git
+
+		ConfigurableApplicationContext context = SpringApplication.run(HotseatApplication.class, args);
 
 		//Stworzenie i otwarcie sesji z bazą
-		SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+		Configuration configuration=new Configuration();
+		configuration.configure("hibernate.cfg.xml").addAnnotatedClass(eu.gzs.hotseat.model.Seance.class)
+				.addAnnotatedClass(eu.gzs.hotseat.model.Seat.class)
+				.addAnnotatedClass(eu.gzs.hotseat.model.Movie.class)
+				.addAnnotatedClass(eu.gzs.hotseat.model.Client.class);
+		SessionFactory sessionFactory = configuration.buildSessionFactory();
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 
-		//Tworzenie Person - tu bez bean'ów narazie, testowo
-		Person person = new Person();
-		person.setName("Karol"); person.setCountry("Poland");
+		Client client1=new Client("Karol Gorski");
+		Movie movie1=new Movie("Star Wars", 180);
+		Seance seance1=new Seance(movie1, 50);
+		seance1.getSeats().get(23).setClient(client1);
 
-		//zapis obiektu do bazy z automatycznym mapowaniem do tabeli
-		session.save(person);
-		session.getTransaction().commit();
-
-		//odczyt z bazy z automatycznym mapowaniem do obiektu
-		List<Person> personList = session.createQuery("from Person").list();
-
-		for(Person p : personList){
-			System.out.println(p.toString());
+		session.save(client1);
+		session.save(seance1);
+		session.save(movie1);
+		for(Seat seat : seance1.getSeats()){
+			session.save(seat);
 		}
+
+		session.getTransaction().commit();
 
 		//zamkniecie sesji
 		session.close();

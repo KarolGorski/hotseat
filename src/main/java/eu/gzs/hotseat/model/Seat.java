@@ -9,10 +9,13 @@ public class Seat {
     @Column(name="Id")
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
-    private int client_id;
 
-    public Seat(int client_id) {
-        this.client_id = client_id;
+    @OneToOne
+    //@JoinColumn(name = "id_client")
+    private Client client;
+
+    public Seat() {
+
     }
 
     public int getId() {
@@ -23,11 +26,11 @@ public class Seat {
         this.id = id;
     }
 
-    public int getClient_id() {
-        return client_id;
+    public Client getClient() {
+        return client;
     }
 
-    public void setClient_id(int client_id) {
-        this.client_id = client_id;
+    public void setClient(Client client) {
+        this.client = client;
     }
 }
