@@ -14,6 +14,8 @@ public class Movie {
 
     private int duration;
 
+    public Movie(){}
+
     public Movie(String name, int duration) {
         this.name = name;
         this.duration = duration;
