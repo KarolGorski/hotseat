@@ -60,6 +60,10 @@ public class HotseatApplication {
 
 		session.getTransaction().commit();
 
+		movie1 = movie_service.findByMovieId(3);
+		System.out.println(movie1.getName());
+
+
 		//zamkniecie sesji
 		session.close();
 

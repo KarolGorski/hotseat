@@ -1,16 +1,17 @@
 package eu.gzs.hotseat.controller;
 
+import eu.gzs.hotseat.daoclasses.MovieDAO;
+import eu.gzs.hotseat.daoclasses.MovieDAOImpl;
 import eu.gzs.hotseat.model.Movie;
-import eu.gzs.hotseat.Repository.MovieRepository;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping({"/movies"})
+//@RequestMapping({"/movies"})
 public class MovieController {
-    private MovieRepository repository;
+    /*private MovieRepository repository;
 
     MovieController(MovieRepository movieRepository){
         this.repository = movieRepository;
@@ -44,6 +45,29 @@ public class MovieController {
                     return ResponseEntity.ok().body(updated);
                 }).orElse(ResponseEntity.notFound().build());
     }
+*/
 
 
+private MovieDAO movieDAO = new MovieDAOImpl();
+
+
+    public void setMovieDAO(MovieDAO md){
+    this.movieDAO = md;
+}
+
+    @RequestMapping({"/movies"})
+    public List<Movie> getAllMovies(MovieDAOImpl movie){
+        return movie.getAllMovies();
+    }
+
+
+    @GetMapping(path = {"/movies/{id}"})
+    public String findById(@PathVariable int id){
+       return this.movieDAO.findByMovieId(id).getName() + " " + movieDAO.findByMovieId(id).getDuration();
+    }
+
+    @PutMapping(path="/movies/{id}")
+    public void update(MovieDAOImpl movie){
+
+    }
 }
