@@ -19,18 +19,21 @@ public class ClientDAOImpl implements ClientDAO {
     public ClientDAOImpl(){}
 
     @Override
-    public void save(Client client) {
+    public Client save(Client client) {
         getCurrentSession().save(client);
+        return client;
     }
 
     @Override
-    public void update(Client client) {
+    public Client update(Client client) {
         getCurrentSession().update(client);
+        return client;
     }
 
     @Override
-    public void delete(Client client) {
+    public Client delete(Client client) {
         getCurrentSession().delete(client);
+        return client;
     }
 
     @Override

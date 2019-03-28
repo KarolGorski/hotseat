@@ -5,11 +5,11 @@ import eu.gzs.hotseat.model.Client;
 import java.util.List;
 
 public interface ClientDAO {
-    void save(Client client);
+    Client save(Client client);
 
-    void update(Client client);
+    Client update(Client client);
 
-    void delete(Client client);
+    Client delete(Client client);
 
     void delete_all_clients();
 

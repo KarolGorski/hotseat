@@ -42,13 +42,12 @@ public class SeanceController {
     }
 
     @PutMapping(value="/{id}/{seat_id}")
-    public Seance reservate(@PathVariable("id") int id, @PathVariable("seat_id") int seat_id,
-                       @RequestBody Seance seance){
+    public Seance reservate(@PathVariable("id") int id, @PathVariable("seat_id") int seat_id){
         Seance seance_temp=seanceService.findBySeanceId(id);
         Seat seat_tem=seance_temp.getSeats().get(seat_id);
 
         ClientService clientService=new ClientService();
-        Client client=clientService.findByClientId(1);
+        Client client=clientService.findByClientId(id);
 
         seat_tem.setClient(client);
         return seanceService.update(seance_temp);

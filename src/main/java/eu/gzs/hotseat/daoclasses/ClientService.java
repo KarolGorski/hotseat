@@ -11,22 +11,25 @@ public class ClientService {
         clientDaoImpl=new ClientDAOImpl();
     }
 
-    public void save(Client movie){
+    public Client save(Client client){
         clientDaoImpl.openCurrentSessionwithTransaction();
-        clientDaoImpl.save(movie);
+        clientDaoImpl.save(client);
         clientDaoImpl.closeCurrentSessionwithTransaction();
+        return client;
     }
 
-    public void update(Client movie){
+    public Client update(Client client){
         clientDaoImpl.openCurrentSessionwithTransaction();
-        clientDaoImpl.update(movie);
+        clientDaoImpl.update(client);
         clientDaoImpl.closeCurrentSessionwithTransaction();
+        return client;
     }
 
-    public void delete(Client movie){
+    public Client delete(Client client){
         clientDaoImpl.openCurrentSessionwithTransaction();
-        clientDaoImpl.delete(movie);
+        clientDaoImpl.delete(client);
         clientDaoImpl.closeCurrentSessionwithTransaction();
+        return client;
     }
 
     public void delete_all(){
