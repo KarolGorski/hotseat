@@ -2,6 +2,7 @@ package eu.gzs.hotseat.controller;
 
 import eu.gzs.hotseat.daoclasses.MovieService;
 import eu.gzs.hotseat.model.Movie;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,7 +30,10 @@ public class MovieController {
     @PutMapping(value="/{id}")
     public void update(@PathVariable("id") int id,
                        @RequestBody Movie movie){
-        movieService.update(movie);
+        Movie movie_temp=findByMovieId(id);
+        movie_temp.setName(movie.getName());
+        movie_temp.setDuration(movie.getDuration());
+        movieService.update(movie_temp);
     }
 
 }
