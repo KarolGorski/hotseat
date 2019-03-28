@@ -17,10 +17,11 @@ public class SeanceService {
         seanceDAOImpl.closeCurrentSessionwithTransaction();
     }
 
-    public void update(Seance seance){
+    public Seance update(Seance seance){
         seanceDAOImpl.openCurrentSessionwithTransaction();
         seanceDAOImpl.update(seance);
         seanceDAOImpl.closeCurrentSessionwithTransaction();
+        return seance;
     }
 
     public void delete(Seance seance){

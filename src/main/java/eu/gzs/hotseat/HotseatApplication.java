@@ -48,11 +48,11 @@ public class HotseatApplication {
 //		movie1.setName("Casino Royale");
 //		movieService.update(movie1);
 
-		SeanceService seanceService=new SeanceService();
-		List<Seance> seances=seanceService.getAllSeances();
-		for(Seance s : seances){
-			System.out.println("seans z fimem: "+s.getMovie().getName());
-		}
+//		SeanceService seanceService=new SeanceService();
+//		List<Seance> seances=seanceService.getAllSeances();
+//		for(Seance s : seances){
+//			System.out.println("seans z fimem: "+s.getMovie().getName());
+//		}
 
 	}
 
