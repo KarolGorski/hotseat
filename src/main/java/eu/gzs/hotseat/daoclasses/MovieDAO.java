@@ -5,11 +5,11 @@ import eu.gzs.hotseat.model.Movie;
 import java.util.List;
 
 public interface MovieDAO {
-    void save(Movie movie);
+    Movie save(Movie movie);
 
-    void update(Movie movie);
+    Movie update(Movie movie);
 
-    void delete(Movie movie);
+    Movie delete(Movie movie);
 
     void delete_all_movies();
 

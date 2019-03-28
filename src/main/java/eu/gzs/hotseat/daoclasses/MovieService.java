@@ -11,22 +11,25 @@ public class MovieService {
         movieDaoImpl=new MovieDAOImpl();
     }
 
-    public void save(Movie movie){
+    public Movie save(Movie movie){
         movieDaoImpl.openCurrentSessionwithTransaction();
         movieDaoImpl.save(movie);
         movieDaoImpl.closeCurrentSessionwithTransaction();
+        return movie;
     }
 
-    public void update(Movie movie){
+    public Movie update(Movie movie){
         movieDaoImpl.openCurrentSessionwithTransaction();
         movieDaoImpl.update(movie);
         movieDaoImpl.closeCurrentSessionwithTransaction();
+        return movie;
     }
 
-    public void delete(Movie movie){
+    public Movie delete(Movie movie){
         movieDaoImpl.openCurrentSessionwithTransaction();
         movieDaoImpl.delete(movie);
         movieDaoImpl.closeCurrentSessionwithTransaction();
+        return movie;
     }
 
     public void delete_all(){

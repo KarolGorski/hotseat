@@ -22,18 +22,21 @@ public class MovieDAOImpl implements MovieDAO {
     public MovieDAOImpl(){};
 
     @Override
-    public void save(Movie movie) {
+    public Movie save(Movie movie) {
         getCurrentSession().save(movie);
+        return movie;
     }
 
     @Override
-    public void update(Movie movie) {
+    public Movie update(Movie movie) {
         getCurrentSession().update(movie);
+        return movie;
     }
 
     @Override
-    public void delete(Movie movie) {
+    public Movie delete(Movie movie) {
         getCurrentSession().delete(movie);
+        return movie;
     }
 
     @Override

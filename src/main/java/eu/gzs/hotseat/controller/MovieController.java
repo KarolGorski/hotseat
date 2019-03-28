@@ -23,17 +23,24 @@ public class MovieController {
     }
 
     @PostMapping
-    public void create(@RequestBody Movie contact){
-        movieService.save(contact);
+    public Movie create(@RequestBody Movie movie){
+        return movieService.save(movie);
+
     }
 
     @PutMapping(value="/{id}")
-    public void update(@PathVariable("id") int id,
+    public Movie update(@PathVariable("id") int id,
                        @RequestBody Movie movie){
         Movie movie_temp=findByMovieId(id);
         movie_temp.setName(movie.getName());
         movie_temp.setDuration(movie.getDuration());
-        movieService.update(movie_temp);
+        return movieService.update(movie_temp);
+
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public Movie delete(@PathVariable("id") int id){
+        return movieService.delete(findByMovieId(id));
     }
 
 }
