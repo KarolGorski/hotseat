@@ -12,12 +12,14 @@ public class Seance {
     @GeneratedValue(strategy =GenerationType.IDENTITY)
     private int id;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "seance_id")
     private List<Seat> seats;
 
     @OneToOne
     private Movie movie;
+
+    public Seance(){}
 
     public Seance(Movie movie, int seats_quantity) {
         this.movie = movie;

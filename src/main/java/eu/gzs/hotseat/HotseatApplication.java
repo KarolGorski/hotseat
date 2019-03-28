@@ -31,26 +31,28 @@ public class HotseatApplication {
 //				.addAnnotatedClass(eu.gzs.hotseat.model.Client.class);
 //		SessionFactory sessionFactory = configuration.buildSessionFactory();
 
-		MovieService movieService=new MovieService();
-		Movie movie1=new Movie("James Bond", 120);
-		Movie movie2=new Movie("Mickey Mouse", 60);
-
-		//movieService.save(movie1);
-		//movieService.save(movie2);
-		List<Movie> list_all_movies=movieService.getAllMovies();
-		for(Movie m : list_all_movies){
-			System.out.println(m.getName()+" "+m.getDuration());
-		}
-
-		movie1=movieService.findByMovieId(3);
-		System.out.println(movie1.getName()+" "+movie1.getDuration());
-
-		movie1.setName("Casino Royale");
-		movieService.update(movie1);
+//		MovieService movieService=new MovieService();
+//		Movie movie1=new Movie("James Bond", 120);
+//		Movie movie2=new Movie("Mickey Mouse", 60);
+//
+//		//movieService.save(movie1);
+//		//movieService.save(movie2);
+//		List<Movie> list_all_movies=movieService.getAllMovies();
+//		for(Movie m : list_all_movies){
+//			System.out.println(m.getName()+" "+m.getDuration());
+//		}
+//
+//		movie1=movieService.findByMovieId(3);
+//		System.out.println(movie1.getName()+" "+movie1.getDuration());
+//
+//		movie1.setName("Casino Royale");
+//		movieService.update(movie1);
 
 		SeanceService seanceService=new SeanceService();
-		Seance seance1=new Seance(movie1, 20);
-		seanceService.save(seance1);
+		List<Seance> seances=seanceService.getAllSeances();
+		for(Seance s : seances){
+			System.out.println("seans z fimem: "+s.getMovie().getName());
+		}
 
 	}
 

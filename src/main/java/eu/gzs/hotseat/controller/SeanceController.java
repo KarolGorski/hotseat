@@ -1,7 +1,9 @@
 package eu.gzs.hotseat.controller;
 
+import eu.gzs.hotseat.daoclasses.SeanceDAOImpl;
 import eu.gzs.hotseat.daoclasses.SeanceService;
 import eu.gzs.hotseat.model.Seance;
+import org.hibernate.Hibernate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,7 +15,8 @@ public class SeanceController {
 
     @GetMapping
     public List<Seance> getAllSeances() {
-        return seanceService.getAllSeances();
+        List<Seance> seances=seanceService.getAllSeances();
+        return seances;
     }
 
     @GetMapping(path = {"/{id}"})
