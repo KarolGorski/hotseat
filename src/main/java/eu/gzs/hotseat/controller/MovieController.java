@@ -1,8 +1,7 @@
 package eu.gzs.hotseat.controller;
 
+import eu.gzs.hotseat.daoclasses.MovieService;
 import eu.gzs.hotseat.model.Movie;
-import eu.gzs.hotseat.Repository.MovieRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,40 +9,27 @@ import java.util.List;
 @RestController
 @RequestMapping({"/movies"})
 public class MovieController {
-    private MovieRepository repository;
-
-    MovieController(MovieRepository movieRepository){
-        this.repository = movieRepository;
-    }
+    private MovieService movieService = new MovieService();
 
     @GetMapping
-    public List<Movie> getHello() {
-        return repository.findAll();
+    public List<Movie> getAllMovies() {
+        return movieService.getAllMovies();
     }
 
     @GetMapping(path = {"/{id}"})
-    public ResponseEntity<Movie> findById(@PathVariable int id){
-        return repository.findById(id)
-                .map(record -> ResponseEntity.ok().body(record))
-                .orElse(ResponseEntity.notFound().build());
+    public Movie findByMovieId(@PathVariable int id){
+        return movieService.findByMovieId(id);
     }
 
     @PostMapping
-    public Movie create(@RequestBody Movie contact){
-        return repository.save(contact);
+    public void create(@RequestBody Movie contact){
+        movieService.save(contact);
     }
 
     @PutMapping(value="/{id}")
-    public ResponseEntity<Movie> update(@PathVariable("id") int id,
-                                        @RequestBody Movie movie){
-        return repository.findById(id)
-                .map(record -> {
-                    record.setName(movie.getName());
-                    record.setDuration(movie.getDuration());
-                    Movie updated = repository.save(record);
-                    return ResponseEntity.ok().body(updated);
-                }).orElse(ResponseEntity.notFound().build());
+    public void update(@PathVariable("id") int id,
+                       @RequestBody Movie movie){
+        movieService.update(movie);
     }
-
 
 }
