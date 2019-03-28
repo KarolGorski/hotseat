@@ -14,6 +14,12 @@ public class ClientController {
 
     ClientService clientService = new ClientService();
 
+    @PostMapping
+    public Client create(@RequestBody Client client){
+        return clientService.save(client);
+
+    }
+
     @GetMapping(path = {"/{id}"})
     public Client findByClientId(@PathVariable int id){
         return clientService.findByClientId(id);
