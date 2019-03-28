@@ -20,6 +20,13 @@ public class ClientController {
 
     }
 
+    @PostMapping("/add/{name}")
+    Client addClient(@PathVariable(value="name") String name) {
+        Client c = new Client();
+        c.setName(name);
+        return clientService.save(c);
+    }
+
     @GetMapping(path = {"/{id}"})
     public Client findByClientId(@PathVariable int id){
         return clientService.findByClientId(id);
