@@ -11,6 +11,8 @@ public interface SeanceDAO {
 
     void delete(Seance seance);
 
+    void delete_all_seances();
+
     Seance findBySeanceId(int senaceId);
 
     Seance findByMovieId(int movieId);

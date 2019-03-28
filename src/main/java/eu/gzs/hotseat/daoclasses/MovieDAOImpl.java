@@ -4,66 +4,99 @@ import eu.gzs.hotseat.HibernateUtil;
 import eu.gzs.hotseat.model.Movie;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MovieDAOImpl extends HibernateDaoSupport implements MovieDAO {
+public class MovieDAOImpl implements MovieDAO {
+
+    private Session currentSession;
+    private Transaction currentTransaction;
+
+    public MovieDAOImpl(){};
 
     @Override
     public void save(Movie movie) {
-        try(Session session= HibernateUtil.getSessionFactory().openSession()){
-            session.beginTransaction();
-            session.save(movie);
-            session.getTransaction().commit();
-        }catch (HibernateException hibex){
-            hibex.printStackTrace();
-        }
+        getCurrentSession().save(movie);
     }
 
     @Override
     public void update(Movie movie) {
-        try(Session session= HibernateUtil.getSessionFactory().openSession()){
-            session.beginTransaction();
-            session.update(movie);
-            session.getTransaction().commit();
-        }catch (HibernateException hibex){
-            hibex.printStackTrace();
-        }
+        getCurrentSession().update(movie);
     }
 
     @Override
     public void delete(Movie movie) {
-        try(Session session= HibernateUtil.getSessionFactory().openSession()){
-            session.beginTransaction();
-            session.delete(movie);
-            session.getTransaction().commit();
-        }catch (HibernateException hibex){
-            hibex.printStackTrace();
+        getCurrentSession().delete(movie);
+    }
+
+    @Override
+    public void delete_all_movies() {
+        List<Movie> entityList = getAllMovies();
+        for (Movie entity : entityList) {
+            delete(entity);
         }
     }
 
     @Override
     public Movie findByMovieId(int movieId) {
-        Movie movie=null;
-        try(Session session= HibernateUtil.getSessionFactory().openSession()){
-            movie=session.load(Movie.class, movieId);
-        }catch (HibernateException hibex){
-            hibex.printStackTrace();
-        }
-        return movie;
+        return (Movie) getCurrentSession().get(Movie.class, movieId);
     }
 
     @Override
     public List<Movie> getAllMovies() {
-        List<Movie> list=new ArrayList<>();
-        try(Session session= HibernateUtil.getSessionFactory().openSession()){
-            list=session.createQuery("from Movie").list();
-        }catch (HibernateException hibex){
-            hibex.printStackTrace();
-        }
-        return list;
+        return (List<Movie>) getCurrentSession().createQuery("from Movie").list();
+    }
+
+    public Session openCurrentSession() {
+        currentSession = getSessionFactory().openSession();
+        return currentSession;
+    }
+
+    public Session openCurrentSessionwithTransaction() {
+        currentSession = getSessionFactory().openSession();
+        currentTransaction = currentSession.beginTransaction();
+        return currentSession;
+    }
+
+    public void closeCurrentSession() {
+        currentSession.close();
+    }
+
+    public void closeCurrentSessionwithTransaction() {
+        currentTransaction.commit();
+        currentSession.close();
+    }
+    private static SessionFactory getSessionFactory() {
+//        Configuration configuration = new Configuration().configure();
+//        StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder()
+//                .applySettings(configuration.getProperties());
+//        SessionFactory sessionFactory = configuration.buildSessionFactory(builder.build());
+
+        Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
+        SessionFactory sessionFactory = configuration.buildSessionFactory();
+        return sessionFactory;
+    }
+
+    public Session getCurrentSession() {
+        return currentSession;
+    }
+
+    public void setCurrentSession(Session currentSession) {
+        this.currentSession = currentSession;
+    }
+
+    public Transaction getCurrentTransaction() {
+        return currentTransaction;
+    }
+
+    public void setCurrentTransaction(Transaction currentTransaction) {
+        this.currentTransaction = currentTransaction;
     }
 }

@@ -11,6 +11,8 @@ public interface ClientDAO {
 
     void delete(Client client);
 
+    void delete_all_clients();
+
     Client findByClientId(int clientId);
 
     List<Client> getAllClients();

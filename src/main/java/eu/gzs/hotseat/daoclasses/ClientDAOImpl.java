@@ -4,63 +4,93 @@ import eu.gzs.hotseat.HibernateUtil;
 import eu.gzs.hotseat.model.Client;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ClientDAOImpl implements ClientDAO {
+
+    private Session currentSession;
+    private Transaction currentTransaction;
+
+    public ClientDAOImpl(){}
+
     @Override
     public void save(Client client) {
-        try(Session session= HibernateUtil.getSessionFactory().openSession()){
-            session.beginTransaction();
-            session.save(client);
-            session.getTransaction().commit();
-        }catch (HibernateException hibex){
-            hibex.printStackTrace();
-        }
+        getCurrentSession().save(client);
     }
 
     @Override
     public void update(Client client) {
-        try(Session session= HibernateUtil.getSessionFactory().openSession()){
-            session.beginTransaction();
-            session.update(client);
-            session.getTransaction().commit();
-        }catch (HibernateException hibex){
-            hibex.printStackTrace();
-        }
+        getCurrentSession().update(client);
     }
 
     @Override
     public void delete(Client client) {
-        try(Session session= HibernateUtil.getSessionFactory().openSession()){
-            session.beginTransaction();
-            session.delete(client);
-            session.getTransaction().commit();
-        }catch (HibernateException hibex){
-            hibex.printStackTrace();
+        getCurrentSession().delete(client);
+    }
+
+    @Override
+    public void delete_all_clients() {
+        List<Client> entityList = getAllClients();
+        for (Client entity : entityList) {
+            delete(entity);
         }
     }
 
     @Override
     public Client findByClientId(int clientId) {
-        try(Session session= HibernateUtil.getSessionFactory().openSession()){
-            return session.load(Client.class, clientId);
-        }catch (HibernateException hibex){
-            hibex.printStackTrace();
-        }
-
-        return null;
+        return (Client) getCurrentSession().get(Client.class, clientId);
     }
 
     @Override
     public List<Client> getAllClients() {
-        List<Client> list=new ArrayList<>();
-        try(Session session= HibernateUtil.getSessionFactory().openSession()){
-            list=session.createQuery("from Client").list();
-        }catch (HibernateException hibex){
-            hibex.printStackTrace();
-        }
-        return list;
+        return (List<Client>) getCurrentSession().createQuery("from Client").list();
+    }
+
+    public Session openCurrentSession() {
+        currentSession = getSessionFactory().openSession();
+        return currentSession;
+    }
+
+    public Session openCurrentSessionwithTransaction() {
+        currentSession = getSessionFactory().openSession();
+        currentTransaction = currentSession.beginTransaction();
+        return currentSession;
+    }
+
+    public void closeCurrentSession() {
+        currentSession.close();
+    }
+
+    public void closeCurrentSessionwithTransaction() {
+        currentTransaction.commit();
+        currentSession.close();
+    }
+    private static SessionFactory getSessionFactory() {
+;
+
+        Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
+        SessionFactory sessionFactory = configuration.buildSessionFactory();
+        return sessionFactory;
+    }
+
+    public Session getCurrentSession() {
+        return currentSession;
+    }
+
+    public void setCurrentSession(Session currentSession) {
+        this.currentSession = currentSession;
+    }
+
+    public Transaction getCurrentTransaction() {
+        return currentTransaction;
+    }
+
+    public void setCurrentTransaction(Transaction currentTransaction) {
+        this.currentTransaction = currentTransaction;
     }
 }

@@ -20,9 +20,13 @@
 
         <!-- Update database on startup -->
         <property name="hibernate.hbm2ddl.auto">update</property>
-
+        
+        <property name="hibernate.current_session_context_class">thread</property>
         <!-- Annotated entity classes -->
         <!--<mapping class="eu.gzs.hotseat.Client"/>-->
-
+        <mapping class="eu.gzs.hotseat.model.Movie"/>
+        <mapping class="eu.gzs.hotseat.model.Seance"/>
+        <mapping class="eu.gzs.hotseat.model.Client"/>
+        <mapping class="eu.gzs.hotseat.model.Seat"/>
     </session-factory>
 </hibernate-configuration>

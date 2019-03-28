@@ -11,6 +11,8 @@ public interface MovieDAO {
 
     void delete(Movie movie);
 
+    void delete_all_movies();
+
     Movie findByMovieId(int movieId);
 
     List<Movie> getAllMovies();
