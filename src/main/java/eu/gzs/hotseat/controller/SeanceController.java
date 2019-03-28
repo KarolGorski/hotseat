@@ -1,5 +1,6 @@
 package eu.gzs.hotseat.controller;
 
+import eu.gzs.hotseat.daoclasses.ClientService;
 import eu.gzs.hotseat.daoclasses.SeanceDAOImpl;
 import eu.gzs.hotseat.daoclasses.SeanceService;
 import eu.gzs.hotseat.model.Client;
@@ -45,7 +46,11 @@ public class SeanceController {
                        @RequestBody Seance seance){
         Seance seance_temp=seanceService.findBySeanceId(id);
         Seat seat_tem=seance_temp.getSeats().get(seat_id);
-        seat_tem.setClient(new Client("Janusz"));
+
+        ClientService clientService=new ClientService();
+        Client client=clientService.findByClientId(1);
+
+        seat_tem.setClient(client);
         return seanceService.update(seance_temp);
     }
 

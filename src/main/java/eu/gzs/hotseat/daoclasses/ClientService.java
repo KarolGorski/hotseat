@@ -35,7 +35,7 @@ public class ClientService {
         clientDaoImpl.closeCurrentSessionwithTransaction();
     }
 
-    public Client findByMovieId(int clientId){
+    public Client findByClientId(int clientId){
         clientDaoImpl.openCurrentSessionwithTransaction();
         Client client=clientDaoImpl.findByClientId(clientId);
         clientDaoImpl.closeCurrentSessionwithTransaction();
