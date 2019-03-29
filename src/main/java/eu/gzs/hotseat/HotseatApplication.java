@@ -54,6 +54,14 @@ public class HotseatApplication {
 //			System.out.println("seans z fimem: "+s.getMovie().getName());
 //		}
 
+		ClientService clientService = new ClientService();
+		Client client=context.getBean(Client.class);
+		System.out.println(client.getName());
+		client.setName("Andrzej");
+
+		Client client1=context.getBean(Client.class);
+		System.out.println(client1.getName());
+
 	}
 
 }
