@@ -6,6 +6,11 @@ import eu.gzs.hotseat.daoclasses.SeanceService;
 import eu.gzs.hotseat.model.Client;
 import eu.gzs.hotseat.model.Movie;
 import eu.gzs.hotseat.model.Seance;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.methods.HttpPut;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -77,7 +82,16 @@ public class HotseatApplicationTests {
 
 	@Test
 	public void shouldCreateReservationWithProperData() throws Exception{
-		//Http
+		//GIVEN
+		HttpUriRequest request=new HttpPut("http://localhost:8080/seances/jaskjfkljafllsfajl");
+
+		//WHEN
+		HttpResponse response= HttpClientBuilder.create().build().execute(request);
+
+		System.out.println(response.getStatusLine().getStatusCode());
+		//THEN
+		Assert.assertNotEquals(
+				response.getStatusLine().getStatusCode(), HttpStatus.SC_NOT_FOUND);
 	}
 
 
