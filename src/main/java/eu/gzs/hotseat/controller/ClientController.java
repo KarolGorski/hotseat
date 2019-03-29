@@ -5,6 +5,7 @@ package eu.gzs.hotseat.controller;
 import eu.gzs.hotseat.daoclasses.ClientService;
 import eu.gzs.hotseat.model.Client;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +16,8 @@ import java.util.List;
 @RequestMapping({"/clients"})
 public class ClientController implements ApplicationContextAware {
     private ApplicationContext applicationContext;
-    ClientService clientService = new ClientService();
+    @Autowired
+    ClientService clientService;
 
     @PostMapping
     public Client create(@RequestBody Client client){
@@ -58,5 +60,9 @@ public class ClientController implements ApplicationContextAware {
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext=applicationContext;
+    }
+
+    public void setClientService(ClientService clientService){
+        this.clientService=clientService;
     }
 }

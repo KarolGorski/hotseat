@@ -1,5 +1,9 @@
 package eu.gzs.hotseat;
 
+import eu.gzs.hotseat.controller.ClientController;
+import eu.gzs.hotseat.daoclasses.ClientDAO;
+import eu.gzs.hotseat.daoclasses.ClientDAOImpl;
+import eu.gzs.hotseat.daoclasses.ClientService;
 import eu.gzs.hotseat.model.Client;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,4 +16,13 @@ public class BeanConfig {
     public Client client(){
         return new Client();
     }
+    @Bean
+    public ClientService clientService(){
+        return new ClientService();
+    }
+    @Bean
+    public ClientDAO clientDAOImpl(){
+        return new ClientDAOImpl();
+    }
+
 }
