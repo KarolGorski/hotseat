@@ -4,14 +4,17 @@ package eu.gzs.hotseat.controller;
 
 import eu.gzs.hotseat.daoclasses.ClientService;
 import eu.gzs.hotseat.model.Client;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping({"/clients"})
-public class ClientController {
-
+public class ClientController implements ApplicationContextAware {
+    private ApplicationContext applicationContext;
     ClientService clientService = new ClientService();
 
     @PostMapping
@@ -22,7 +25,8 @@ public class ClientController {
 
     @PostMapping("/add/{name}")
     Client addClient(@PathVariable(value="name") String name) {
-        Client c = new Client();
+        Client c=applicationContext.getBean(Client.class);
+        //Client c = new Client();
         c.setName(name);
         return clientService.save(c);
     }
@@ -49,5 +53,10 @@ public class ClientController {
     @DeleteMapping(value = "/{id}")
     public Client delete(@PathVariable("id") int id){
         return clientService.delete(findByClientId(id));
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext=applicationContext;
     }
 }
