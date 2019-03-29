@@ -58,6 +58,7 @@ public class HotseatApplication {
 		Client client=context.getBean(Client.class);
 		System.out.println(client.getName());
 		client.setName("Andrzej");
+		System.out.println(client.getName());
 
 		Client client1=context.getBean(Client.class);
 		System.out.println(client1.getName());

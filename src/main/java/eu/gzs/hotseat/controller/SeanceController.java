@@ -7,14 +7,20 @@ import eu.gzs.hotseat.model.Client;
 import eu.gzs.hotseat.model.Seance;
 import eu.gzs.hotseat.model.Seat;
 import org.hibernate.Hibernate;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping({"/seances"})
-public class SeanceController {
-    private SeanceService seanceService = new SeanceService();
+public class SeanceController implements ApplicationContextAware {
+    private ApplicationContext applicationContext;
+    @Autowired
+    SeanceService seanceService;
 
     @GetMapping
     public List<Seance> getAllSeances() {
@@ -53,4 +59,8 @@ public class SeanceController {
         return seanceService.update(seance_temp);
     }
 
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext=applicationContext;
+    }
 }
