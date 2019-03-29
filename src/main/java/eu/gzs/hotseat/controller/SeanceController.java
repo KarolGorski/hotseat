@@ -52,7 +52,8 @@ public class SeanceController implements ApplicationContextAware {
         Seance seance_temp=seanceService.findBySeanceId(id);
         Seat seat_tem=seance_temp.getSeats().get(seat_id);
 
-        ClientService clientService=new ClientService();
+        //ClientService clientService=new ClientService();
+        ClientService clientService=applicationContext.getBean(ClientService.class);
         Client client=clientService.findByClientId(client_id);
 
         seat_tem.setClient(client);
