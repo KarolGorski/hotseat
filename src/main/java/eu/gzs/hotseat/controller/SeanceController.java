@@ -56,7 +56,7 @@ public class SeanceController implements ApplicationContextAware {
         Client client=clientService.findByClientId(client_id);
 
         seat_tem.setClient(client);
-        return seanceService.update(seance_temp);
+        return seanceService.update(seance_temp,seat_tem);
     }
 
     @Override

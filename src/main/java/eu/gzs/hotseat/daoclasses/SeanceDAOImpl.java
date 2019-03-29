@@ -29,12 +29,17 @@ public class SeanceDAOImpl implements SeanceDAO {
         getCurrentSession().save(seance);
     }
 
-    @Override
     public void update(Seance seance) {
         List<Seat> seats=seance.getSeats();
         for(Seat s : seats){
             getCurrentSession().update(s);
         }
+        getCurrentSession().update(seance);
+    }
+
+    @Override
+    public void update(Seance seance, Seat seat) {
+        getCurrentSession().update(seat);
         getCurrentSession().update(seance);
     }
 

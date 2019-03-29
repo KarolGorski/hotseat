@@ -3,6 +3,7 @@ package eu.gzs.hotseat;
 import eu.gzs.hotseat.controller.ClientController;
 import eu.gzs.hotseat.daoclasses.*;
 import eu.gzs.hotseat.model.Client;
+import eu.gzs.hotseat.model.Seat;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;

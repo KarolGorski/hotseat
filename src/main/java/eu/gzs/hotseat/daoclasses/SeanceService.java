@@ -1,6 +1,7 @@
 package eu.gzs.hotseat.daoclasses;
 
 import eu.gzs.hotseat.model.Seance;
+import eu.gzs.hotseat.model.Seat;
 
 import java.util.List;
 
@@ -17,6 +18,12 @@ public class SeanceService {
         seanceDAOImpl.closeCurrentSessionwithTransaction();
     }
 
+    public Seance update(Seance seance, Seat seat){
+        seanceDAOImpl.openCurrentSessionwithTransaction();
+        seanceDAOImpl.update(seance, seat);
+        seanceDAOImpl.closeCurrentSessionwithTransaction();
+        return seance;
+    }
     public Seance update(Seance seance){
         seanceDAOImpl.openCurrentSessionwithTransaction();
         seanceDAOImpl.update(seance);
